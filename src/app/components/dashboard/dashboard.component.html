@@ -1,0 +1,105 @@
+<div class="container">
+  <h5 class="my-4">
+    Dealership Dashboard
+  </h5>
+</div>
+
+<div
+  class="container mb-4"
+  *ngIf="!unsoldLoading && (makeArray.length == 0 || !makeArray)"
+>
+  <div
+    [routerLink]="['/stock']"
+    class="card no-stock-card shadow bg-primary text-light"
+  >
+    <h5 class="p-4 text-center">
+      You currently have no available stock. Click to add a vehicle.
+    </h5>
+  </div>
+</div>
+
+<div class="container flex mb-5">
+  <div [routerLink]="['/stock']" class="card counter-card unsold-card shadow">
+    <div class="card-header bg-warning">AVAILABLE</div>
+    <div class="card-body bg-warning">
+      <ng-container *ngIf="!unsoldLoading">
+        <h1 class="text-right">
+          {{ totalUnsold }}<span *ngIf="totalUnsold != 1"> vehicles</span
+          ><span *ngIf="totalUnsold == 1"> vehicle</span>
+        </h1>
+        <h6 class="text-right mt-3 text-muted">
+          Total stock value:
+          <span class="font-weight-bold">{{
+            totalUnsoldValue | currency: "GBP"
+          }}</span>
+        </h6>
+      </ng-container>
+      <div class="spinner">
+        <div
+          *ngIf="unsoldLoading"
+          class="spinner-border text-dark text-center"
+          role="status"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <div [routerLink]="['/stock']" class="card counter-card sold-card shadow">
+    <div class="card-header bg-success-light">SOLD</div>
+    <div class="card-body bg-success-light">
+      <ng-container *ngIf="!soldLoading">
+        <h1 class="text-right">
+          {{ totalSold }}<span *ngIf="totalSold != 1"> vehicles</span
+          ><span *ngIf="totalSold == 1"> vehicle</span>
+        </h1>
+        <h6 class="text-right mt-3 text-muted">
+          Average vehicle sale price:
+          <span class="font-weight-bold">{{
+            avgSoldPrice | currency: "GBP"
+          }}</span>
+        </h6>
+      </ng-container>
+      <div class="spinner">
+        <div
+          *ngIf="soldLoading"
+          class="spinner-border text-dark text-center"
+          role="status"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mb-4" *ngIf="makeArray.length > 0">
+  <div class="card unsoldChart shadow">
+    <div class="card-header text-center bg-primary text-light">
+      AVAILABLE STOCK SUMMARY
+    </div>
+    <div class="card-body chart-wrapper" *ngIf="!unsoldLoading">
+      <canvas
+        width="600"
+        baseChart
+        responsive="true"
+        [data]="makeTally[1]"
+        [labels]="makeTally[0]"
+        chartType="doughnut"
+        [options]="chartOptions"
+      ></canvas>
+    </div>
+
+    <button
+      [hidden]="unsoldLoading"
+      class="btn btn-primary btn-block mb-4"
+      routerLink="/stock"
+    >
+      View Stock
+    </button>
+    <div class="spinner">
+      <div
+        *ngIf="unsoldLoading"
+        class="spinner-border text-primary my-4 text-center"
+        role="status"
+      ></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+.counter-card {
+  width: 45%;
+
+  :hover {
+    cursor: pointer;
+  }
+
+  .card-header {
+    border: none;
+  }
+}
+
+.no-stock-card {
+  :hover {
+    cursor: pointer;
+  }
+}
+
+.counter {
+  display: flex;
+
+  height: 100%;
+}
+
+::ng-deep .chartjs-render-monitor {
+  max-width: 500px;
+  height: auto !important;
+  margin: auto;
+}
+
+.btn-primary {
+  width: auto;
+  margin: 0 auto;
+}
+
+@media (max-width: 500px) {
+  .flex {
+    flex-direction: column;
+  }
+
+  h5 {
+    text-align: center;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .unsold-card {
+    margin-bottom: 3rem;
+  }
+}

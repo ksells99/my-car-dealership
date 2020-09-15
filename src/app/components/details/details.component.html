@@ -1,0 +1,204 @@
+<div class="container mt-4">
+  <div class="row" *ngIf="!loading && dealershipDetails">
+    <div class="col-md details-col">
+      <div class="card shadow-sm mb-4" *ngIf="!editDetails">
+        <div class="card-header bg-primary text-light">Dealership Details</div>
+        <div class="card-body">
+          <h5 class="font-weight-bold">{{ dealershipDetails?.name }}</h5>
+          <h5 class="mt-4">{{ dealershipDetails?.address1 }}</h5>
+          <h5>{{ dealershipDetails?.city }}</h5>
+          <h5>{{ dealershipDetails?.county }}</h5>
+          <h5>{{ dealershipDetails?.postcode }}</h5>
+          <h5 class="mt-4">{{ dealershipDetails?.phone }}</h5>
+          <h5>{{ dealershipDetails?.email }}</h5>
+          <button
+            class="btn btn-info mt-3 mb-1"
+            *ngIf="!editDetails"
+            (click)="toggleEditDetails()"
+          >
+            Edit Details
+          </button>
+        </div>
+      </div>
+      <div *ngIf="editDetails" class="mb-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <form
+              (ngSubmit)="onSubmitDetails(detailsForm)"
+              class="form-group"
+              style="width: 80%;"
+              #detailsForm="ngForm"
+            >
+              <label for="name">Dealership name</label>
+              <input
+                type="text"
+                class="form-control mb-4"
+                name="name"
+                [(ngModel)]="name"
+                required
+                placeholder="Dealership name"
+              />
+              <label for="address1">Address line 1</label>
+              <input
+                type="text"
+                class="form-control mb-4"
+                name="address1"
+                [(ngModel)]="address1"
+                required
+                placeholder="Address line 1"
+              />
+              <label for="city">Town/City</label>
+              <input
+                type="text"
+                class="form-control mb-4"
+                name="city"
+                [(ngModel)]="city"
+                required
+                placeholder="Town/City"
+              />
+              <label for="county">County</label>
+              <input
+                type="text"
+                class="form-control mb-4"
+                name="county"
+                [(ngModel)]="county"
+                required
+                placeholder="County"
+              />
+              <label for="postcode">Postcode</label>
+              <input
+                type="text"
+                class="form-control mb-4"
+                name="postcode"
+                [(ngModel)]="postcode"
+                required
+                placeholder="Postcode"
+              />
+              <label for="phone">Phone number</label>
+              <input
+                type="text"
+                class="form-control mb-4"
+                name="phone"
+                [(ngModel)]="phone"
+                required
+                placeholder="Phone number"
+              />
+              <label for="email">Email address</label>
+              <input
+                type="email"
+                class="form-control mb-5"
+                name="email"
+                [(ngModel)]="email"
+                required
+                placeholder="Email address"
+              />
+              <button type="submit" class="btn btn-success mr-2">
+                Save Changes
+              </button>
+              <button class="btn btn-danger" (click)="cancelEditDetails()">
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md map-col">
+      <div class="card">
+        <agm-map [latitude]="lat" [longitude]="long" [zoom]="zoom">
+          <agm-marker [latitude]="lat" [longitude]="long"></agm-marker>
+        </agm-map>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !dealershipDetails">
+    <div class="card mb-4 bg-primary text-light">
+      <h5 class="p-2 text-center">
+        Add your dealership details
+      </h5>
+    </div>
+    <form class="form-group">
+      <input
+        class="form-control mb-3"
+        type="text"
+        name="name"
+        placeholder="Dealership name"
+        [(ngModel)]="newName"
+        required
+      />
+
+      <input
+        class="form-control mb-3"
+        type="text"
+        name="address1"
+        placeholder="Address line 1"
+        [(ngModel)]="newAddress1"
+        required
+      />
+      <input
+        class="form-control mb-3"
+        type="text"
+        name="city"
+        placeholder="Town/City"
+        [(ngModel)]="newCity"
+        required
+      />
+      <input
+        class="form-control mb-3"
+        type="text"
+        name="county"
+        placeholder="County"
+        [(ngModel)]="newCounty"
+        required
+      />
+      <input
+        class="form-control mb-3"
+        type="text"
+        name="postcode"
+        placeholder="Postcode"
+        [(ngModel)]="newPostcode"
+        required
+      />
+      <input
+        class="form-control mb-3"
+        type="text"
+        name="email"
+        placeholder="Email address"
+        [(ngModel)]="newEmail"
+        required
+      />
+      <input
+        class="form-control mb-3"
+        type="text"
+        name="phone"
+        placeholder="Phone number"
+        [(ngModel)]="newPhone"
+        required
+      />
+      <button
+        class="btn btn-success"
+        (click)="addNewDetails()"
+        [disabled]="
+          !newName ||
+          !newAddress1 ||
+          !newCity ||
+          !newCounty ||
+          !newPostcode ||
+          !newEmail ||
+          !newPhone
+        "
+      >
+        Save Details
+      </button>
+    </form>
+  </div>
+
+  <div class="spinner">
+    <div
+      *ngIf="loading"
+      class="spinner-border text-primary text-center"
+      role="status"
+    ></div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+.dropdown {
+  margin-left: auto;
+}
+
+.sign-up {
+  border-radius: 10px;
+}
+
+.logout-link {
+  cursor: pointer;
+}
+
+.user-email:hover {
+  background-color: inherit;
+}
+
+@media (max-width: 768px) {
+  .nav.nav-pills {
+    margin: 0px auto;
+  }
+  .sign-up {
+    background-color: transparent !important;
+    color: white !important;
+    .nav-link {
+      color: #fbfbff !important;
+    }
+  }
+  .navbar-brand {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 460px) {
+  .hide-sm {
+    display: none;
+  }
+}
+
+@media (max-width: 438px) {
+  .nav.nav-pills {
+    justify-content: space-around;
+  }
+}

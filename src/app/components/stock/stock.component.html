@@ -1,0 +1,301 @@
+<div class="container"></div>
+
+<div class="container mt-3">
+  <div class="title-button-wrapper">
+    <h5>
+      Vehicle Stock
+    </h5>
+    <!-- Button trigger modal -->
+    <div class="add-button-wrapper">
+      <button
+        type="button"
+        class="btn btn-primary add-btn"
+        data-toggle="modal"
+        data-target="#addVehicleModal"
+      >
+        Add Vehicle
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="addVehicleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="addVehicleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addVehicleModal">Add Vehicle</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-group">
+            <input
+              class="form-control mb-3"
+              type="text"
+              name="registration"
+              placeholder="Registration"
+              [(ngModel)]="newReg"
+              required
+            />
+
+            <input
+              class="form-control mb-3"
+              type="text"
+              name="make"
+              placeholder="Make"
+              [(ngModel)]="newMake"
+              required
+            />
+            <input
+              class="form-control mb-3"
+              type="text"
+              name="model"
+              placeholder="Model"
+              [(ngModel)]="newModel"
+              required
+            />
+            <input
+              class="form-control mb-3"
+              type="text"
+              name="colour"
+              placeholder="Colour"
+              [(ngModel)]="newColour"
+              required
+            />
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fas fa-pound-sign"></i>
+                </div>
+              </div>
+              <input
+                class="form-control"
+                type="number"
+                name="price"
+                placeholder="Price"
+                [(ngModel)]="newPrice"
+                required
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-dismiss="modal"
+            (click)="clearFormState()"
+          >
+            Cancel
+          </button>
+          <span data-dismiss="modal"
+            ><button
+              type="submit"
+              class="btn btn-primary"
+              (click)="addVehicle()"
+              [disabled]="
+                !newReg || !newMake || !newModel || !newColour || !newPrice
+              "
+            >
+              Add Vehicle
+            </button></span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="accordion" role="tablist">
+    <!-- AVAILABLE STOCK -->
+    <div class="card mt-4">
+      <div
+        class="card-header stock-header bg-warning"
+        role="tab"
+        id="availableStockHeader"
+      >
+        Available Stock
+        <a
+          data-toggle="collapse"
+          class="stock-collapse"
+          href="#availableStock"
+          aria-expanded="true"
+          aria-controls="availableStock"
+        >
+          <i class="fas fa-expand-alt"></i>
+        </a>
+      </div>
+      <div
+        id="availableStock"
+        class="collapse show"
+        role="tabpanel"
+        aria-labelledby="availableStockHeader"
+      >
+        <div class="card-body" *ngFor="let vehicle of availableVehicles">
+          <div class="stock-flex">
+            <div class="stock-info">
+              <span class="font-weight-bold">{{ vehicle.registration }}</span>
+              - {{ vehicle.make }} {{ vehicle.model }} ({{ vehicle.colour }}) -
+              <span class="font-italic">
+                {{ vehicle.price | currency: "GBP" }}</span
+              >
+            </div>
+            <div class="stock-actions">
+              <div class="button-wrapper btn-group">
+                <button
+                  (click)="onEditVehicle(vehicle)"
+                  [hidden]="editState && vehicleToEdit.id == vehicle.id"
+                  class="btn btn-primary ml-auto"
+                >
+                  <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="btn btn-dark" (click)="markSold(vehicle)">
+                  <i class="fas fa-wallet"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Show edit form if editState=true - show only for the ID of vehicle being edited -->
+          <div
+            class="mt-4 px-3"
+            *ngIf="editState && vehicleToEdit.id == vehicle.id"
+          >
+            <!-- Edit form - Call updateVehicle on form submit -->
+            <form (ngSubmit)="updateVehicle(vehicle)">
+              <!-- Model inputs to vehicle properties -->
+              <label for="registration" class="text-muted">Registration</label>
+              <input
+                class="form-control mb-3"
+                type="text"
+                [(ngModel)]="vehicle.registration"
+                name="registration"
+                placeholder="Registration"
+              />
+              <label for="make" class="text-muted">Make</label>
+              <input
+                class="form-control mb-3"
+                type="text"
+                [(ngModel)]="vehicle.make"
+                name="make"
+                placeholder="Make"
+              />
+              <label for="model" class="text-muted">Model</label>
+              <input
+                class="form-control mb-3"
+                type="text"
+                [(ngModel)]="vehicle.model"
+                name="model"
+                placeholder="Model"
+              />
+              <label for="colour" class="text-muted">Colour</label>
+              <input
+                class="form-control mb-3"
+                type="text"
+                [(ngModel)]="vehicle.colour"
+                name="colour"
+                placeholder="Colour"
+              />
+              <label for="price" class="text-muted">Price</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fas fa-pound-sign"></i>
+                  </div>
+                </div>
+                <input
+                  class="form-control"
+                  type="number"
+                  [(ngModel)]="vehicle.price"
+                  name="price"
+                  placeholder="Price"
+                />
+              </div>
+
+              <input
+                type="submit"
+                value="Save Vehicle"
+                class="btn btn-success mr-2"
+                [disabled]="
+                  !vehicle.registration ||
+                  !vehicle.make ||
+                  !vehicle.model ||
+                  !vehicle.colour ||
+                  !vehicle.price
+                "
+              />
+
+              <button (click)="cancelEdit()" class="btn btn-danger">
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOLD STOCK -->
+    <div class="card mt-4 mb-4">
+      <div
+        class="card-header stock-header bg-success"
+        role="tab"
+        id="soldStockHeader"
+      >
+        Sold Vehicles
+        <a
+          data-toggle="collapse"
+          class="stock-collapse"
+          href="#soldStock"
+          aria-expanded="true"
+          aria-controls="soldStock"
+        >
+          <i class="fas fa-expand-alt"></i>
+        </a>
+      </div>
+      <div
+        id="soldStock"
+        class="collapse show"
+        role="tabpanel"
+        aria-labelledby="soldStockHeader"
+      >
+        <div class="card-body" *ngFor="let vehicle of soldVehicles">
+          <div class="stock-flex">
+            <div class="stock-info">
+              <span class="font-weight-bold">{{ vehicle.registration }}</span>
+              - {{ vehicle.make }} {{ vehicle.model }} ({{ vehicle.colour }}) -
+              <span class="font-italic">
+                {{ vehicle.price | currency: "GBP" }}</span
+              >
+              -
+              <span class="font-weight-bold text-muted"
+                >Sold {{ vehicle.saleDate | date: "dd/MM/yyyy" }}</span
+              >
+            </div>
+            <div class="stock-actions">
+              <div class="button-wrapper btn-group ml-auto">
+                <button
+                  class="btn btn-warning ml-auto"
+                  (click)="markUnsold(vehicle)"
+                >
+                  <i class="fas fa-undo-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+// Env file for Github only to show format
+
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+  },
+  mappingApiKey: "",
+  latLongApiKey: "",
+};
