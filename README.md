@@ -5,3 +5,7 @@ MyCarDealership is a stock management application designed for car dealerships, 
 The application was built using Angular, and uses Firebase for the back-end. This was also the first time I have used Chart.js along with the Google Maps API, the former showing a breakdown of unsold vehicle stock and the latter pin-pointing the dealership's location on the map. I have also used the LocationIQ API in order to convert string addresses entered by the user into lat/long values that can be read by the Google Maps API.
 
 The app is deployed on Firebase Hosting and can be accessed here:
+
+![Showcase1](/showcase-1.png?raw=true "Showcase1")
+![Showcase2](/showcase-2.png?raw=true "Showcase2")
+![Showcase3](/showcase-3.png?raw=true "Showcase3")
